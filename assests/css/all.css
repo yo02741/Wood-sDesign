@@ -11427,7 +11427,7 @@ li {
 .slogan {
   position: absolute;
   left: 50px;
-  top: 60vh;
+  top: 50vh;
   z-index: 99;
   letter-spacing: 5px;
   line-height: 2;

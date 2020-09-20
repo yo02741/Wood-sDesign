@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品列表 - 木's design</title>
+    <!-- BS4 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- Vue Loading Overlay -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.4.0/dist/vue-loading.css">
+
+    <!-- fontAwesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <!-- Own -->
+    <link rel="stylesheet" href="assests/css/all.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- spinner/dots/bars -->
+        <loading loader="bars" 
+                color="#B38C4D"
+                :active.sync="isLoading">
+        </loading>
+
+        <div class="jumbotron jumbotron-fluid productsjumbotron">
+            <nav class="navbar navbar-expand-lg navClass py-3">
+                <h1 class="logo">
+                    <a class="navbar-brand text-white font-weight-bold ml-4" href="./index.html">木's design</a>
+                </h1>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link px-4 font-weight-bold" href="#">關於我們</a>
+                        </li>  
+                        <li class="nav-item">
+                            <a class="nav-link px-4 font-weight-bold" href="#">永續經營</a>
+                        </li> 
+                        <li class="nav-item">
+                            <a class="nav-link px-4 font-weight-bold" href="products.html">產品列表</a>
+                        </li> 
+                        <li class="nav-item">
+                            <a class="nav-link px-4 font-weight-bold" href="cart.html">購物車</a>
+                        </li> 
+                    </ul>
+                </div>
+            </nav>
+        </div>   
+    
+        <div class="container">
+            <div class="row productcategory">
+                <div class="col-12">
+                    <ul class="d-flex justify-content-center">
+                        <li class="item">
+                            <a href="#" @click.prevent="getProducts" :class="{active : categoryNow ==='全部'}">全部</a>
+                        </li>
+                        <li class="item" v-for="(item, index) in category" :key="index">
+                            <a href="#" @click.prevent="getProductsCategory(item)" :class="{active : categoryNow === item}">{{ item }}</a>
+                        </li>
+                    </ul>
+                </div>            
+            </div>
+            <ul class="row productlist">
+                <li class="col-12 col-md-6 col-lg-4 my-4" v-for="(item, index) in products" :key="item.id">
+                    <div class="card mx-auto">
+                        <div class="cardimg" :style="{ backgroundImage: `url('${ item.imageUrl[0] }')` }">
+                        </div>
+                        <div class="card-body">
+                            <div class="title d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="card-title mb-0 w-75">{{ item.title }}</h5>
+                                <span class="badge badge-secondary">{{ item.category }}</span>
+                            </div>
+                            <div class="intro mb-4">
+                                <p class="card-text">{{ item.content }}</p>
+                            </div>
+                            <div v-if="!item.price || item.price === item.origin_price">
+                                <div>$<span class="h3 mx-1">{{ item.origin_price }}</span></div>
+                            </div>
+                            <div class="price" v-else>
+                                <del><span>$</span>{{ item.origin_price }}</del>
+                                <div><span class="text-danger h3 mx-1">$ {{ item.price }}</span></div>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-sm btn-outline-secondary" @click.prevent="getProduct(item.id)">查看更多</a>
+                            <a href="#" class="btn btn-sm btn-outline-danger" @click.prevent="addToCart(item.id)">加入購物車</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <pagination class="col-12" :pages="pagination" @update="getProducts"></pagination>
+        </div>
+    
+        <div class="container-fluid footer bg-primary text-center">
+            <div class="container py-4">
+                <div class="row">
+                    <div class="col-md-4 mb-4 mb-md-0 d-flex flex-column justify-content-center align-items-center">
+                        <a class="h1 text-white font-weight-bold px-4" href="./index.html">木's design</a>
+                    </div>
+                    <div class="col-md-4 mb-4 mb-md-0 d-flex flex-column justify-content-center align-items-center">
+                        <p class="text-white mb-0">Copyright © 2020 木's design</p>
+                        <p class="text-white mb-0">純屬練習，不做商業行為。</p>
+                        <p class="text-white mb-0">圖片來源：unsplash、pexels</p>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="d-flex justify-content-around  align-items-center mb-0">
+                            <li>
+                                <a href="https://www.facebook.com/profile.php?id=100003064961458" class="icon">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/8736.yo/" class="icon">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/yo02741" class="icon">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://codepen.io/yo02741" class="icon">
+                                    <i class="fab fa-codepen"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -  detailProductModal -->
+        <div class="modal fade" id="detailProductModal" tabindex="-1" aria-labelledby="detailProductModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-bold" id="detailProductModalLabel">{{ tempProduct.title }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body d-flex flex-column">
+                        <h3 class="mt-4 text-center">{{ tempProduct.description }}</h3>
+                        <p class="mt-4 text-right"> — {{ tempProduct.content }}</p>
+                        
+                        <div class="mt-4">
+                            <div v-if="!tempProduct.price || tempProduct.price === tempProduct.origin_price">
+                                <div class="text-right">$<span class="h3 mx-1">{{ tempProduct.price }}</span>/{{ tempProduct.unit }}</div>
+                            </div>
+                            <div class="price d-flex justify-content-between align-items-end" v-else>
+                                <del><span>$</span>{{ tempProduct.origin_price }}/{{ tempProduct.unit }}</del>
+                                <div><span class="text-danger h3 mx-1">$ {{ tempProduct.price }}</span>/{{ tempProduct.unit }}</div>
+                            </div>
+                        </div>   
+                        
+                        <div class="form-group mt-4 mb-0">
+                            <label for="num" class="sr-only">數量</label>
+                            <select id="num" class="form-control" v-model="tempProduct.num" @change="change"> 
+                                <option value="0" selected disabled>請選擇數量</option>
+                                <option v-for="(num, index) in 10" :key="index" :value="num">{{ num + tempProduct.unit }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <span class="text-secondary mr-4" v-if="tempProduct.num != 0">小計<strong class="mx-2">{{ tempProduct.price * tempProduct.num }}</strong>元</span>
+                        <button type="button" class="btn btn-primary" :disabled="tempProduct.num === 0" @click.prevent="addToCart(tempProduct.id,tempProduct.num)">加入購物車</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>    
+      
+    <!-- BS4 jQ -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+      </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+      </script>
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <!-- Vue Loading Overlay -->
+    <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.4.0/dist/vue-loading.js"></script>
+
+    <!-- VeeValidate -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
+
+    <!-- Own -->
+    <script src="js/products.js" type="module"></script>
+</body>
+</html>

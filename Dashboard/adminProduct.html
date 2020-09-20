@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>adminProduct</title>
+
+    <!-- BS4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <!-- Vue Loading Overlay -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.4.0/dist/vue-loading.css">
+
+    <!-- fontAwesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <!-- Own -->
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+    
+    <div id="app" class="container-fluid px-0">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand font-weight-bold" href="adminProduct.html">後台管理系統</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse  justify-content-between" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="adminProduct.html">產品列表</a>
+                </li>  
+                <li class="nav-item">
+                    <a class="nav-link" href="coupons.html">優惠券列表</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="#">圖片頁面</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="#">訂單列表</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="simulateOrder.html">模擬下單系統</a>
+                </li> 
+                </ul>
+                <div class="nav-item dropdown">
+                    <a class="nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <i class="fas fa-user-circle text-dark h4 mb-0"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-md-right px-2" aria-labelledby="navbarDropdown">
+                        <div class="info">
+                            <p class="text-right">{{ api.uuid }}</p>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="function d-flex justify-content-end">
+                            <button type="button" class="btn btn-primary">登出</button>     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- spinner/dots/bars -->
+        <loading loader="bars" 
+                color='#0069D9'
+                :active.sync="isLoading"></loading>
+                
+        <div class="container">
+            <div class="text-right mt-4">
+                <button class="btn btn-primary" @click="openModal('new')">點我新增產品</button>
+            </div>
+            <table class="table table-hover mt-4">
+                <thead class="thead-light">
+                    <tr>
+                        <th width="120">分類</th>
+                        <th>產品名稱</th>
+                        <th width="120">原價</th>
+                        <th width="120">售價</th>
+                        <th width="100">是否啟用</th>
+                        <th width="120">編輯</th>                    					
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in products" :key="item.id">
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.origin_price }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>
+                            <strong v-if="item.enabled" class="text-success">啟用</strong>
+                            <span v-else>未啟用</span>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary btn-sm" @click="openModal('edit', item)" :class="{ disabled : loading === item.id}">
+                                    <span :class="{ 'sr-only' : loading === item.id}">編輯</span>
+                                    <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true" v-if="loading === item.id"></span>
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" @click="openModal('delete', item)">
+                                    刪除
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <pagination :pages="pagination" @update="getProducts"></pagination>
+        </div>
+
+        <!-- ProductModal -->
+        <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+            <product-modal :temp-product="tempProduct" :api="api" :is-new="isNew" @refresh="getProducts"></product-modal>
+        </div>
+
+        <!-- delProductModal -->
+        <div class="modal fade" id="delProductModal" tabindex="-1" role="dialog" aria-labelledby="delProductModalLabel" aria-hidden="true">
+            <del-product-modal :temp-product="tempProduct" :api="api" :is-new="isNew" @refresh="getProducts"></del-product-modal>
+        </div>
+
+    </div>
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+      </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.4.0/dist/vue-loading.js"></script>
+    <script src="js/adminProduct.js" type="module"></script>
+</body>
+</html>

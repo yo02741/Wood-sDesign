@@ -1,0 +1,22 @@
+// footer
+.footer ul {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.icon {    
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    &:hover i{
+        color: $accent;
+        transform: rotate(360deg);
+    }
+    i {
+        color: #fff;
+        font-size: 24px;
+        transition: all .5s;
+    }
+}
+

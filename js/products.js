@@ -136,6 +136,26 @@ new Vue({
 
             $('#detailProductModal').modal('hide');
         },
+        changeQuantity(id,num){
+            const url = `${ this.api.apiPath }api/${ this.api.uuid }/ec/shopping`;
+
+            const cart = {
+                product : id,
+                quantity : num,
+            }
+
+            this.isLoading = true;
+
+            axios.patch(url,cart)
+                .then( res=> {
+                    this.isLoading = false;
+                    this.getCart();
+                })
+                .catch( err => {
+                    this.isLoading = false;
+                    this.getCart();
+                })
+        },
     },
     created() {
         this.getProducts();

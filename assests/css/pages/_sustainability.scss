@@ -1,0 +1,33 @@
+.sustainabilityjumbotron {
+    height: 50vh;
+    background: url('https://images.pexels.com/photos/3171942/pexels-photo-3171942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') no-repeat center center;
+    background-size: cover;
+    box-shadow: 0 10px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.sustainabilitycontainer {
+    .title-overlay {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-48%,2%);
+        z-index: -1;
+    }
+    .txt {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        .content {
+            letter-spacing: 3px;
+            line-height: 2;
+        }        
+    }    
+    .picture {
+        background: url('https://images.pexels.com/photos/998723/pexels-photo-998723.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') no-repeat center center;
+        background-size: cover;
+        width: 100%;
+        padding-top: 50%;
+        border-radius: 5px;
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    }
+}

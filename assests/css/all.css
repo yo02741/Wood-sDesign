@@ -11364,6 +11364,18 @@ li {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(244,244,244)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
+.logo {
+  background: url("../image/logo.png") no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: block;
+  width: 200px;
+  height: 75px;
+  text-indent: 150%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .footer ul {
   position: relative;
   top: 50%;
@@ -11485,8 +11497,8 @@ li {
 .introduce div:nth-child(1) .photo {
   background: url("https://images.pexels.com/photos/5089143/pexels-photo-5089143.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat;
   background-size: cover;
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   border-radius: 150px;
 }
 
@@ -11494,17 +11506,95 @@ li {
   background: url("https://images.pexels.com/photos/634511/pexels-photo-634511.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat;
   background-size: cover;
   background-position: right;
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   border-radius: 150px;
 }
 
 .introduce div:nth-child(3) .photo {
   background: url("https://images.pexels.com/photos/848199/pexels-photo-848199.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat;
   background-size: cover;
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   border-radius: 150px;
+}
+
+.aboutusjumbotron {
+  height: 50vh;
+  background: url("https://images.pexels.com/photos/5766/wood-fireplace-horizontal.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat center center;
+  background-size: cover;
+  -webkit-box-shadow: 0 10px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+          box-shadow: 0 10px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.aboutuscontainer .title-overlay {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translate(-48%, 2%);
+          transform: translate(-48%, 2%);
+  z-index: -1;
+}
+
+.aboutuscontainer .txt {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.aboutuscontainer .txt .content {
+  letter-spacing: 3px;
+  line-height: 2;
+}
+
+.aboutuscontainer .picture {
+  background: url("https://images.pexels.com/photos/5089108/pexels-photo-5089108.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500") no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  padding-top: 50%;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+          box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.sustainabilityjumbotron {
+  height: 50vh;
+  background: url("https://images.pexels.com/photos/3171942/pexels-photo-3171942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat center center;
+  background-size: cover;
+  -webkit-box-shadow: 0 10px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+          box-shadow: 0 10px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.sustainabilitycontainer .title-overlay {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translate(-48%, 2%);
+          transform: translate(-48%, 2%);
+  z-index: -1;
+}
+
+.sustainabilitycontainer .txt {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.sustainabilitycontainer .txt .content {
+  letter-spacing: 3px;
+  line-height: 2;
+}
+
+.sustainabilitycontainer .picture {
+  background: url("https://images.pexels.com/photos/998723/pexels-photo-998723.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  padding-top: 50%;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+          box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 .productsjumbotron {

@@ -1,0 +1,30 @@
+.productsjumbotron {
+    height: 50vh;
+    background: url('https://images.pexels.com/photos/40973/background-brown-circle-cut-40973.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') no-repeat center center;
+    background-size: cover;
+    box-shadow: 0 10px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.productcategory .item a {
+    display: block;
+    color: $primary;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-bottom: 2px solid transparent;
+    transition: all .5s;
+    &:hover {
+        color: $primarylight;
+        border-bottom: 2px solid $accent;
+    }
+    &:active , &.active {
+        color: $primarylight;
+        border-bottom: 2px solid $accent;
+    }
+}
+
+.cardimg {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
